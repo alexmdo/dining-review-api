@@ -15,13 +15,27 @@ public class UserMapper {
 
     public CreateUser toCreateUserDTO(final User user) {
         CreateUser createUser = new CreateUser();
+        createUser.setId(user.getId());
         createUser.setName(user.getName());
+        createUser.setCity(user.getCity());
+        createUser.setState(user.getState());
+        createUser.setZipCode(user.getZipCode());
+        createUser.setInterestedInPeanutAllergies(user.isInterestedInPeanutAllergies());
+        createUser.setInterestedInEggAllergies(user.isInterestedInEggAllergies());
+        createUser.setInterestedInDairyAllergies(user.isInterestedInDairyAllergies());
         return createUser;
     }
 
     public User toEntity(final CreateUser user) {
         User entity = new User();
+        entity.setId(user.getId());
         entity.setName(user.getName());
+        entity.setCity(user.getCity());
+        entity.setState(user.getState());
+        entity.setZipCode(user.getZipCode());
+        entity.setInterestedInPeanutAllergies(user.isInterestedInPeanutAllergies());
+        entity.setInterestedInEggAllergies(user.isInterestedInEggAllergies());
+        entity.setInterestedInDairyAllergies(user.isInterestedInDairyAllergies());
         return entity;
     }
 
