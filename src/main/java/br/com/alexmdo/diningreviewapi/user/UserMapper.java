@@ -71,6 +71,7 @@ public class UserMapper {
                 .map(entity -> {
                     FindByName findByName = new FindByName();
                     findByName.setId(entity.getId());
+                    findByName.setName(entity.getName());
                     findByName.setCity(entity.getCity());
                     findByName.setState(entity.getState());
                     findByName.setZipCode(entity.getZipCode());

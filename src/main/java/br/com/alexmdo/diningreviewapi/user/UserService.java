@@ -55,7 +55,7 @@ public class UserService {
 
     public void validateUserSubmittedDiningReview(final String name) {
         List<User> users = userRepository.findByNameContainingIgnoreCase(name);
-        if (!users.isEmpty()) {
+        if (users.isEmpty()) {
             throw new UserNotFoundException("User was not found given name " + name);
         }
     }

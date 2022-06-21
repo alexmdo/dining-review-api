@@ -1,6 +1,7 @@
 package br.com.alexmdo.diningreviewapi.user;
 
 import br.com.alexmdo.diningreviewapi.user.dto.CreateUser;
+import br.com.alexmdo.diningreviewapi.user.dto.FindByName;
 import br.com.alexmdo.diningreviewapi.user.dto.UpdateUser;
 import br.com.alexmdo.diningreviewapi.user.exceptions.UserAlreadyExistsException;
 import br.com.alexmdo.diningreviewapi.user.exceptions.UserNotFoundException;
@@ -10,6 +11,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -117,10 +120,33 @@ class UserServiceTest {
     }
 
     @Test
-    void findByName() {
+    void givenGindByName_whenUserExists_thenItShouldReturnAValidUser() {
+        List<FindByName> johnDoe = userService.findByName("John Doe");
+        assertFalse(johnDoe.isEmpty());
+        FindByName findByName = johnDoe.get(0);
+
+        assertEquals("John Doe", findByName.getName());
+        assertEquals("Cotia", findByName.getCity());
+        assertEquals("SP", findByName.getState());
+        assertEquals("06703798", findByName.getZipCode());
+        assertTrue(findByName.isInterestedInPeanutAllergies());
+        assertFalse(findByName.isInterestedInEggAllergies());
+        assertTrue(findByName.isInterestedInDairyAllergies());
     }
 
     @Test
-    void validateUserSubmittedDiningReview() {
+    void givenGindByName_whenUserDoesNotExists_thenItShouldReturnAnEmptyList() {
+        List<FindByName> johnDoe = userService.findByName("Alex Kid");
+        assertTrue(johnDoe.isEmpty());
+    }
+
+    @Test
+    void givenValidateUserSubmittedDiningReview_whenUserDoesNotExists_thenItShouldRaiseAnError() {
+        assertThrows(UserNotFoundException.class, () -> userService.validateUserSubmittedDiningReview("Alex Kid"), "User was not found given name Alex Kid");
+    }
+
+    @Test
+    void givenValidateUserSubmittedDiningReview_whenUserExists_thenItShouldNotRaiseAnyError() {
+        userService.validateUserSubmittedDiningReview("John Doe");
     }
 }

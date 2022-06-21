@@ -6,6 +6,7 @@ import lombok.Data;
 public class FindByName {
 
     private Long id;
+    private String name;
     private String city;
     private String state;
     private String zipCode;
